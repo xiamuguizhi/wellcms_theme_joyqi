@@ -1,0 +1,2 @@
+# wellcms_theme_joyqi
+这是一款移植joyqi.com的wellcms极简主题
