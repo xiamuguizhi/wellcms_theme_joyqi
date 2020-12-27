@@ -1,0 +1,40 @@
+<?php include _include(APP_PATH.'view/template/joyqi/htm/header.htm');?>
+
+
+<header>
+  <h1><?php echo $header['title'];?></h1>
+</header>
+<article class="archive">
+  <ul>
+
+    <?php if($threadlist) { foreach($threadlist as &$_thread) { ?>
+
+    <li>
+      <a href="<?php echo $_thread['url']; ?>"><?php echo $_thread['subject'];?></a>
+      <span class="meta">
+        <time datetime="<?php echo $_thread['create_date_fmt'];?>"
+          itemprop="datePublished"><?php echo $_thread['create_date_fmt'];?></time>
+        |
+        <?php echo $_thread['posts'];?> 评论 |
+        <?php echo format_number($_thread['views']);?> 浏览
+      </span>
+    </li>
+    <?php }} else { ?>
+    <?php echo "该用户未发布任何文章 T_T" ;?>
+    <!-- 判断有没有文章 -->
+    <?php } ?>
+
+
+
+  </ul>
+
+  <!-- 分页 -->
+  <?php if ($pagination) { ?>
+  <ol class="page-navigator">
+    <?php echo $pagination; ?>
+  </ol>
+  <?php } ?>
+
+</article>
+
+<?php include _include(APP_PATH.'view/template/joyqi/htm/footer.htm');?>

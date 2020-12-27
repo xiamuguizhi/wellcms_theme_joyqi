@@ -1,0 +1,53 @@
+<?php $db = GLOBALS('db');?>
+<?php $starttime = GLOBALS('starttime');?>
+<?php $time = GLOBALS('time');?>
+<?php $ip = GLOBALS('ip');?>
+<?php $useragent = GLOBALS('useragent');?>
+<?php $forumlist = GLOBALS('forumlist');?>
+<?php $forumarr = GLOBALS('forumarr');?>
+<?php $fid = GLOBALS('fid');?>
+<?php $conf = GLOBALS('conf');?>
+<?php $config = GLOBALS('config');?>
+<?php $static_version = $conf['static_version'];?>
+
+
+<footer>
+  &copy; 2020
+  <a href="<?php echo $conf['path'] ;?>"><?php echo $conf['sitename'];?></a>. Powered By
+  <a target="_blank" href="https://xiamuyourenzhang.cn/">XiaMu</a>.
+  Processed:
+  <b>
+    <?php echo substr(microtime(1) - $starttime, 0, 5);?>
+  </b>, SQL:
+  <b>
+    <?php echo count($db->sqls);?>
+  </b>
+
+  <p>
+    <a href="https://twitter.com/joyqi" target="_blank">Twitter</a>
+    |
+    <a href="https://github.com/joyqi" target="_blank">GitHub</a>
+    |
+    <a href="https://jigu.im/joyqi" target="_blank">JiGu</a>
+    |
+    <a href="https://t.me/joyqi70" target="_blank">Telegram</a>
+  </p>
+</footer>
+
+<script src="<?php echo view_path();?>js/jquery.min.js<?php echo $static_version;?>"></script>
+<script>
+  var debug = DEBUG = < ? php echo DEBUG; ? > ;
+  var url_rewrite_on = < ? php echo $conf['url_rewrite_on']; ? > ;
+  var url_path = '<?php echo $conf['
+  path '];?>';
+  var forumarr = < ? php echo xn_json_encode($forumarr); ? > ;
+  var fid = < ? php echo $fid; ? > ;
+  var uid = < ? php echo intval($uid); ? > ;
+  var gid = < ? php echo intval($gid); ? > ;
+</script>
+<script src="<?php echo view_path();?>js/wellcms.js<?php echo $static_version;?>"></script>
+
+</body>
+
+</html>
+<?php echo cron_run();?>

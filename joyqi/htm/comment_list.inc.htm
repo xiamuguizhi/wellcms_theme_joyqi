@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>评论跳转页面</title>
+</head>
+
+<body>
+  <?php if($postlist) { foreach($postlist as $_post) { ?>
+
+  <?php if('read' != $route && !empty($_post['subject'])) {?>
+
+  <h6 class="h6 text-break font-weight-bold">
+
+    <a href="<?php echo $_post['url'];?>" target="_blank">
+
+      <?php echo $_post['subject'];?>
+
+      <?php header("location:".$_post['url'] ); ?>
+
+    </a>
+  </h6>
+
+  <?php } ?>
+
+  <?php }} ?>
+
+</body>
+
+</html>

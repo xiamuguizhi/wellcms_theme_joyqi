@@ -1,0 +1,70 @@
+<?php if($postlist) { foreach($postlist as $_post) { ?>
+
+<li class="row <?php echo $_post['classname'];?> comment-body comment-parent comment-odd"
+  data-pid="<?php echo $_post['pid'];?>" data-uid="<?php echo $_post['uid'];?>">
+
+  <div class="col-lg-12 d-flex justify-content-between text-muted my-2">
+
+    <div>
+
+      <img class="avatar-1 avatar" src="<?php echo $_post['user_avatar_url'];?>" width="32" height="32">
+
+      <cite><?php echo $_post['username'];?></cite>
+
+      <span class="comment-meta"><?php echo $_post['create_date_fmt'];?></span>
+
+    </div>
+
+    <div>
+
+      <?php if($allowpost) { ?>
+
+      <a href="javascript:void(0)" data-tid="<?php echo $_post['tid'];?>" data-pid="<?php echo $_post['pid'];?>"
+        class="text-grey well_reply mr-2">
+        <!-- 回复 -->
+        <span class="d-none">
+
+          <?php
+
+                                      if (isset($user['username'])) {  
+
+                                        echo "回复";    
+                                                 
+                                        } 
+                                        
+                                      ;?>
+        </span>
+      </a>
+      <?php } ?>
+
+      <?php if($_post['floor']) { ?>
+      <span class="floor-parent mr-2">
+        <span class="floor mr-1">
+          <?php echo $_post['floor'];?>
+        </span>
+        <?php echo lang('floor');?>
+      </span>
+      <?php } ?>
+
+
+    </div>
+
+  </div>
+
+  <div class="comment-content">
+
+    <?php if('read' != $route && !empty($_post['subject'])) {?>
+    <h6 class="h6 text-break font-weight-bold">
+      <a href="<?php echo $_post['url'];?>" target="_blank"></a>
+      <?php echo $_post['subject'];?>
+      </a>
+    </h6>
+    <?php } ?>
+
+    <?php echo $_post['message'];?>
+    <br>
+    <?php echo data_file_list_html($_post['filelist']);?>
+
+  </div>
+</li>
+<?php }} ?>

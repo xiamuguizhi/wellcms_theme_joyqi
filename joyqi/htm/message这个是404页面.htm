@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>  
+<html>  
+<head>  
+<meta charset="UTF-8" />  
+<meta name="viewport" content="width=device-width, initial-scale=1">  
+<meta name="robots" content="none" />  
+<title>404 Not Found</title>  
+<style>  
+body {
+    background: #F7F7F7;
+    font-size: 16px;
+    font-family: 'Avenir Next',Avenir,'Helvetica Neue',Helvetica,'Lantinghei SC','Hiragino Sans GB',sans-serif;
+    padding: 0;
+    margin: 0;
+    letter-spacing: 1px;
+}
+*{font-family:"Microsoft Yahei";margin:0;font-weight:lighter;text-decoration:none;text-align:center;line-height:2.2em;}  
+html,body{height:100%;}  
+h1{font-size:100px;line-height:1em;}  
+table{width:100%;height:100%;border:0;}  
+</style>  
+</head>  
+<body>  
+<table cellspacing="0" cellpadding="0">  
+<tr>  
+<td>  
+<table cellspacing="0" cellpadding="0">  
+<tr>  
+<td>  
+<h1>404</h1>  
+
+<h3>大事不妙啦！</h3>  
+<p>
+    <?php 
+    
+    
+        $str = $_SERVER["QUERY_STRING"].""; 
+    
+        if(strpos($str,'comment-create')!==false){
+            echo '请认真输入内容，在点击回复哦～<br/>';
+    
+        }else if(strpos($str,'list-')!==false){
+    
+            echo '这个栏目还没创建诶～<br/>'; 
+       
+    
+        }else if(strpos($str,'read-')!==false){
+    
+            echo '作者好像没有写过这篇文章,呜呜～<br/>'; 
+       
+        }else{
+    
+        echo '竟然被你发现了我的宝藏吗？害怕！！！<br/>'; 
+    
+        }
+    
+    
+    ?>
+
+<a href="javascript:history.go(-1);">返回页面 ></a>  
+
+</p>  
+</td>  
+</tr>  
+</table>  
+</td>  
+</tr>  
+</table>  
+</body>  
+</html>  

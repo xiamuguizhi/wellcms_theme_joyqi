@@ -1,0 +1,91 @@
+<?php $conf = GLOBALS('conf');?>
+<?php $header = GLOBALS('header');?>
+<?php $user = GLOBALS('user');?>
+<?php $uid = GLOBALS('uid');?>
+<?php $gid = GLOBALS('gid');?>
+<?php $fid = GLOBALS('fid');?>
+<?php $tid = GLOBALS('tid');?>
+<?php $pid = GLOBALS('pid');?>
+<?php $route = GLOBALS('route');?>
+<?php $forumlist_show = GLOBALS('forumlist_show');?>
+<?php $forum_nav = GLOBALS('forum_nav');?>
+<?php $static_version = $conf['static_version'];?>
+
+<!DOCTYPE html>
+<html lang="<?php echo $conf['lang'];?>">
+
+<head>
+  <?php echo defined('BASE_HREF') ? '<base href="'.BASE_HREF.'" />' : '' ;?>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title><?php 
+    
+    $str = $_SERVER["QUERY_STRING"].""; 
+
+    if(strpos($str,'list-')!==false){
+
+      echo '分类 - ';
+
+      echo $header['title'];
+   
+    }else if(strpos($str,'read-')!==false){
+
+      echo $header['title']; 
+      echo ' - ';
+      echo $conf['sitename'];
+   
+    }else if(strpos($str,'tag-')!==false){
+
+      echo '标签 - ' . $header['title'] . ' - ';
+      echo $conf['sitename'];
+
+    }else if(strpos($str,'index-')!==false){
+
+    function get_between($input, $start, $end) {
+        $substr = substr($input, strlen($start)+strpos($input, $start),(strlen($input) - strpos($input, $end))*(-1));
+        return $substr;
+    }
+      echo "分页 - " . $conf['sitename']. " - 第" . get_between($str,'-','.') . "页";
+
+    }else{
+
+      echo $header['title'];
+      echo ' - 爱好收藏挖掘互联网文章';  
+
+    }
+
+?></title>
+  <link rel="stylesheet" href="<?php echo view_path();?>template/joyqi/css/style.css<?php echo $static_version;?>">
+  <link rel="shortcut icon" href="/favicon.ico" />
+  <?php if(!empty($header['keywords'])) { ?>
+  <meta name="keywords" content="<?php echo $header['keywords'];?>" />
+  <?php } ?>
+  <meta name="description" content="<?php echo $header['description'];?>" />
+
+<body>
+  <nav>
+
+    <a href="<?php echo $conf['path'] ;?>"><?php echo lang('index_page');?></a>
+
+    <?php if ($forum_nav = category_tree($forumlist)) { foreach($forum_nav as $_forum) { ?>
+    <a href="<?php echo $_forum['url'];?>"><?php echo $_forum['name'];?></a>
+    <?php if ($_forum['son']){ ?>
+
+    <?php foreach($_forum['sonlist'] as $_son) { ?>
+    <!--  判断子栏目-->
+    <a href="<?php echo $_son['url'];?>"><?php echo $_son['name'];?>
+
+      <?php } ?>
+      <?php } ?>
+      <?php }} ?>
+      <a href="#" onclick="sousuo()">搜索</a>
+      <script>
+        function sousuo() {
+          var name = prompt("输入关键词", ""); // 搜索文章
+          if (name != null && name != "") {
+            location.href = '<?php echo $conf['path'] ;?>?operate-search-' + name + '-1.html';
+          }
+        }
+      </script>
+
+  </nav>

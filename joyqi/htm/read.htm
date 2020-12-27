@@ -1,0 +1,152 @@
+<?php include _include(APP_PATH.'view/template/joyqi/htm/header.htm');?>
+
+
+
+<header>
+  <h1><?php echo $thread['subject'];?></h1>
+</header>
+<article>
+
+  <?php if(1 == $page) { ?>
+
+  <?php echo $data['message'];?>
+
+  <?php echo data_file_list_html($thread['filelist']);?>
+
+  <?php } else { ?>
+
+  <p>
+    <?php echo lang('view_thread_message');?>
+    </a>
+  </p>
+  <?php } ?>
+
+ <!-- 判断是否有tag --> 
+ <span>
+ <?php if (1 == $page) { ?>
+  
+  <?php if ($thread['tag']) { ?>
+    标签：
+      <?php foreach($thread['tag_fmt'] as $_tag => $_tagname) { ?>
+ <a href="<?php echo url('tag-' . $_tag);?>" target="_blank"><?php echo $_tagname; ?></a>                      
+      <?php }?>
+
+  <?php }?>
+  <?php }?>
+</span> 
+
+  <br>
+ <!--  转载请注明原文地址: <?php echo http_url_path(),$thread['url']; ?> -->
+
+<!--{hook read_random.htm}-->
+
+</article>
+
+<div id="comments">
+
+  <h3>已有 <?php echo $thread['posts'];?> 条评论</h3>
+
+
+  <ol class="comment-list">
+
+
+
+    <?php
+
+                        if (isset($user['username'])) { 
+    
+    
+                        }else{
+                          echo "<li class=\"\row post comment-body comment-parent comment-odd\"\>"; 
+                          echo "您好～！检测到你未登陆<br>您需要注册或者登陆才能评论留言哦(ノへ￣、)<br>"; 
+                          $zc = 'http://192.168.0.111/?user-create.html';  
+                          $dl = 'http://192.168.0.111/?user-login.html';
+                          echo "<a href='{$zc}' title='注册' target=\"\_blank\"\>注册</a>╮(～▽～)╭<a href='{$dl}' title='登陆'  target=\"\_blank\"\>登陆</a>"; 
+                          echo "<br>随后刷新本页面即可";   
+                          
+                          echo "</li>";  
+
+                          } 
+
+                        ;?>
+
+    <!-- 加载公用评论列表文件 -->
+
+    <?php include _include(APP_PATH.'view/template/joyqi/htm/comments.htm');?>
+    <div style="text-align:center;">
+      <!-- 评论分页 -->
+      <?php if($pagination) { ?>
+      <ol class="page-navigator">
+        <?php echo $pagination; ?>
+      </ol>
+      <?php }?>
+    </div>
+    <!-- 判断主题是否开启评论，与最下面有一处对应 -->
+    <?php if(!empty($user) && 0 == $thread['closed']) { ?>
+    <li class="row post newpost media comment-body comment-parent comment-odd">
+      <div class="col-lg-12 d-flex justify-content-between small text-muted">
+        <!--{hook read_comment_post_start.htm}-->
+        <div>
+          <!-- 评论用户名 -->
+          <!-- 评论头像 -->
+
+          <span>点击ID：“<a href="<?php echo url('my');?>" tabindex="-1"
+              target="_blank"><?php echo $user['username'];?></a>” 进行管理<br>欢迎留言评论</span>
+        </div>
+
+      </div>
+
+      <!-- 评论框开始 -->
+      <div class="col-lg-12">
+
+        <!-- 评论表单 quick_reply_form 不要随意修改 -->
+        <form action="<?php echo url('comment-create-'.$tid);?>" method="post" id="quick_reply_form" class="d-block">
+          <!-- 此处原样复制 -->
+          <input type="hidden" name="doctype" value="1" />
+          <input type="hidden" name="return_html" value="1" />
+          <input type="hidden" name="quotepid" value="0" />
+
+          <!-- 评论框不要随意删减，message 与下面 js 有对应 -->
+          <div class="message mt-1">
+            <textarea rows="8" cols="50" class="form-control" placeholder="<?php echo lang('message');?>" name="message"
+              id="message"></textarea>
+          </div>
+
+          <div class="d-flex justify-content-around text-muted mt-2 small">
+
+            <!-- 提交按钮 -->
+            <button type="submit" class="btn btn-sm btn-secondary" id="submit"
+              data-loading-text="<?php echo lang('submiting');?>...">
+              <?php echo lang('reply');?>
+            </button>
+
+            <?php if(2 == array_value($forum, 'comment', 0)) { ?>
+            <a class="icon-mail-forward text-muted" href="<?php echo url('comment-create-'.$tid);?>"
+              id="advanced_reply"><?php echo lang('advanced_reply');?></a>
+            <?php } ?>
+          </div>
+
+          <!-- 表单闭合 -->
+        </form>
+
+      </div>
+      <!-- 评论框结束 -->
+    </li>
+    <?php } ?>
+    </ul>
+</div>
+</div>
+
+
+</ol>
+
+</div>
+
+<?php if($thread['closed'] && (0 == $gid || $gid > 5)) { ?>
+<script>
+  jmessage.val('<?php echo lang('
+    thread_has_already_closed ');?>').attr('readonly', 'readonly');
+</script>
+<?php } ?>
+
+<?php include _include(APP_PATH.'view/template/joyqi/htm/footer.htm');?>

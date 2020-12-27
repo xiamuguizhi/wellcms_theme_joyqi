@@ -1,0 +1,37 @@
+<?php include _include(APP_PATH.'view/template/joyqi/htm/header.htm');?>
+
+
+
+
+<header>
+  <h1><?php echo $thread['subject'];?></h1>
+</header>
+<article>
+
+
+
+  <?php if(1 == $page) { ?>
+
+  <?php echo $data['message'];?>
+
+  <?php echo data_file_list_html($thread['filelist']);?>
+
+  <?php } else { ?>
+
+  <p>
+    <?php echo lang('view_thread_message');?>
+    </a>
+  </p>
+  <?php } ?>
+
+</article>
+
+
+<?php if($thread['closed'] && (0 == $gid || $gid > 5)) { ?>
+<script>
+  jmessage.val('<?php echo lang('
+    thread_has_already_closed ');?>').attr('readonly', 'readonly');
+</script>
+<?php } ?>
+
+<?php include _include(APP_PATH.'view/template/joyqi/htm/footer.htm');?>
